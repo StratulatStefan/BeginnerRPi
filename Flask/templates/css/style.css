@@ -66,3 +66,15 @@ fieldset{
     border-radius:10px;
     margin-top : 50px;
 }
+
+button{
+    width:500px;
+    font-size:30px;
+    margin-top:50px;
+    margin-bottom:50px;
+    font-family : fantasy;
+}
+
+#alcool{
+
+}

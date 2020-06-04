@@ -45,7 +45,8 @@ def etilotest():
 
 @app.route('/datesenzortempsigaz')
 def DHT11MQ2():
-    return {"temp" : "Nimic inca" ,"umiditate" : "Nimic inca", "gaz" : "Nimic inca"}
+    data = GetTempHumidityGas()
+    return str(json.dumps(data))
 
 
 @app.route('/home')
