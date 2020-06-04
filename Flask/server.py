@@ -1,10 +1,9 @@
 from flask import Flask, redirect, render_template, request, url_for
-import time
 import json
 from worker import *
 
 app = Flask(__name__)
-app.register_error_handler(404, lambda error: "Page not fucking found!")
+app.register_error_handler(404, lambda error: render_template("notfound.html"))
 
 '''
 @app.route('/<name>', methods = ["POST", "GET"])
@@ -36,11 +35,11 @@ def peakyblindersredirect():
 def performanteTimpReal():
     return render_template("performante.html", temp = 10)
 
-
 @app.route('/home')
 @app.route('/')
 def home():
     return render_template("index.html")
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
