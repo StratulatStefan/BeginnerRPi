@@ -14,8 +14,10 @@ def GetSystemData():
 		 "tens_io" : "measure_volts sdram_i",
 		 "sd_card_clock" : "measure_clock emmc"}
 	data = {}
+	'''
 	for key in field:
 		process = subprocess.Popen([filepath, field[key]], stdout=subprocess.PIPE)
 		output = process.stdout.readline().decode('ascii')
 		data[key] = output[:-1]
+	'''
 	return data

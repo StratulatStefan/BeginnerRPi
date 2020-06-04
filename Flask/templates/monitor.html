@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h3 class="title">Monitor al starii ambientale</h3>
+    <h3>Unul din principalele avantaje ale masinii RPi este posibilitatea integrarii, prin
+        intermediul celor 40 de pini GPIO, cu o multitudine de componente hardware. In acest sens,
+        vom implementa un sistem de masurare a starii ambientale. Astfel, vom afisa urmatoarele caracteristici : </h3>
+    <ul style="margin-bottom:100px;">
+        <li>Temperatura exterioara (informatie preluata de pe internet)</li>
+        <li>Temperatura ambientului (informatie preluata de la senzorul DHT11)</li>
+        <li>Umiditatea ambientului (informatie preluata de la senzorul DHT11)</li>
+        <li>Nivelul de Gaz (informatie preluata de la senzorul MQ2)</li>
+    </ul>
+    <hr />
+    <fieldset>
+        <h3>Actualizarea se face la fiecare 10 secunde.</h3>
+        <h3 id="locatie"></h3>
+        <h3 id="temperaturaexterioara"></h3>
+    </fieldset>
+    <fieldset>
+        <h3>Actualizarea se face la fiecare 5 secunde.</h3>
+        <h3 id="temperaturainterioara"></h3>
+        <h3 id="umiditateinterioara"></h3>
+        <h3 id="nivelgazinterior"></h3>
+    </fieldset>
+    <script>
+        getGlobalData();
+        getLocalData();
+        setInterval(getLocalData, 5000);
+        setInterval(getGlobalData, 10000);
+
+        function getGlobalData(){
+            navigator.geolocation.getCurrentPosition(
+                async function(position){
+                    let latitude = parseFloat(position.coords.latitude).toFixed(5)
+                    let longitude = parseFloat(position.coords.longitude).toFixed(5)
+                    let apikey = "529ce5e970fc138f7303bf09eb34a9cf"
+                    let link = `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apikey}`
+                    let response = await fetch(link)
+                    let body = await response.json()
+                    document.getElementById("locatie").innerHTML = `Locatia dumneavoastra : ${body.name}`
+                    document.getElementById("temperaturaexterioara").innerHTML =
+                           `Temperatura : ${parseFloat(parseFloat(body.main.feels_like) - 273.15).toFixed(2)} C<br/>
+                           Temperatura maxima : ${parseFloat(parseFloat(body.main.temp_max) - 273.15).toFixed(2)} C<br/>
+                           Temperatura minima : ${parseFloat(parseFloat(body.main.temp_min) - 273.15).toFixed(2)} C<br/>
+                           Umiditate exterioara : ${body.main.humidity}%<br/>`
+                }
+            );
+        }
+        function getLocalData(){
+            fetch('/datesenzortempsigaz').then(result => result.json()).then(result => {
+                document.getElementById("temperaturainterioara").innerHTML = `Temperatura interioara : ${result.temp}`
+                document.getElementById("umiditateinterioara").innerHTML = `Umiditate interioara : ${result.umiditate}`
+                document.getElementById("nivelgazinterior").innerHTML = `Nivel gaz : ${result.gaz}`
+            });
+        }
+    </script>
+{% endblock %}
+

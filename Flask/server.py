@@ -33,7 +33,20 @@ def peakyblindersredirect():
 
 @app.route('/performante')
 def performanteTimpReal():
-    return render_template("performante.html", temp = 10)
+    return render_template("performante.html")
+
+@app.route('/monitor')
+def monitor():
+    return render_template("monitor.html")
+
+@app.route('/etilotest')
+def etilotest():
+    return render_template("etilotest.html")
+
+@app.route('/datesenzortempsigaz')
+def DHT11MQ2():
+    return {"temp" : "Nimic inca" ,"umiditate" : "Nimic inca", "gaz" : "Nimic inca"}
+
 
 @app.route('/home')
 @app.route('/')
