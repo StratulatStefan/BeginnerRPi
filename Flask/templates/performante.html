@@ -32,18 +32,18 @@
         }, 2000);
 
         function SetData(sysdata){
-	   data = JSON.parse(sysdata)
-	   Object.keys(data).map((key) => {data[key] = data[key].split("=")[1]});
-	   document.getElementById("cputemp").innerHTML = "Temperatura procesor : " + data["cpu_temp"]
-           document.getElementById("frecvarm").innerHTML = "Frecventa procesor : " + parseInt(data["frecv_arm"]) / 1000000 + " MHz"
-           document.getElementById("frecvcore").innerHTML = "Frecventa core procesor : " + parseInt(data["frecv_core"]) / 1000000 + "MHz"
-           document.getElementById("ramcpu").innerHTML = "Memorie RAM alocata pentru CPU : " + data["ram_cpu"] + "b"
-           document.getElementById("ramgpu").innerHTML = "Memorie RAM alocata pentru GPU :  " + data["ram_gpu"] + "b"
- 	   document.getElementById("tensalimcore").innerHTML = "Tensiune alimentare core : " + data["tens_alim_core"]
-           document.getElementById("tensio").innerHTML = "Tensiune alimentare I/O : " + data["tens_io"]
-           document.getElementById("tensram").innerHTML = "Tensiune alimentare RAM : " + data["tens_ram"]
-	   document.getElementById("frecvsd").innerHTML = "Frecventa memorie SD : " + parseInt(data["sd_card_clock"]) / 1000000 + "MHz"
- 	   document.getElementById("throttle").innerHTML = "Throttle : " + data["throttle"]
+			data = JSON.parse(sysdata)
+			Object.keys(data).map((key) => {data[key] = data[key].split("=")[1]});
+			document.getElementById("cputemp").innerHTML = "Temperatura procesor : " + data["cpu_temp"]
+			document.getElementById("frecvarm").innerHTML = "Frecventa procesor : " + parseInt(data["frecv_arm"]) / 1000000 + " MHz"
+			document.getElementById("frecvcore").innerHTML = "Frecventa core procesor : " + parseInt(data["frecv_core"]) / 1000000 + "MHz"
+			document.getElementById("ramcpu").innerHTML = "Memorie RAM alocata pentru CPU : " + data["ram_cpu"] + "b"
+			document.getElementById("ramgpu").innerHTML = "Memorie RAM alocata pentru GPU :  " + data["ram_gpu"] + "b"
+			document.getElementById("tensalimcore").innerHTML = "Tensiune alimentare core : " + data["tens_alim_core"]
+			document.getElementById("tensio").innerHTML = "Tensiune alimentare I/O : " + data["tens_io"]
+			document.getElementById("tensram").innerHTML = "Tensiune alimentare RAM : " + data["tens_ram"]
+			document.getElementById("frecvsd").innerHTML = "Frecventa memorie SD : " + parseInt(data["sd_card_clock"]) / 1000000 + "MHz"
+			document.getElementById("throttle").innerHTML = "Throttle : " + data["throttle"]
         }
     </script>
 {% endblock %}
