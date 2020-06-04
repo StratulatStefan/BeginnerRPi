@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h3 class="title">Performante ale sistemului in timp real</h3>
+    <h3>Raspberry PI este o platforma care opereaza cel mai bine cu sistemul Linux. Din acest motiv,
+        principalul sistem de operare pus la dispozitie de producatorii RPi, este Raspberry Os (Raspbian),
+        care este, in esenta, o distributie Debian de Linux. Astfel, vom folosi avantajele acestui sistem
+        de operare, pentru a afisa o serie de caracteristici ale sistemului, in timp real. Aceste date
+        vor fi citite din anumite fisiere ale sistemului Linux.</h3>
+    <h3>Totodata, a fost adaugata o alerta pentru supraincalzirea procesorului. S-a atasat un LED rosu, care se aprinde 
+        daca procesorul depaseste temperatura de 55 C. </h3>
+    <h3 style="margin-bottom:100px;">Actualizarea se face odata la 2 secunde</h3>
+    <h3 id="cputemp"></h3>
+    <h3 id="frecvarm"></h3>
+    <h3 id="frecvcore"></h3>
+    <h3 id="frecvsd"></h3>
+    <h3 id="ramcpu"></h3>
+    <h3 id="ramgpu"></h3>
+    <h3 id="tensalimcore"></h3>
+    <h3 id="tensio"></h3>
+    <h3 id="tensram"></h3>
+    <h3 id="throttle"></h3>
+    <script>
+        setInterval(() => {
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.onreadystatechange = () => {
+                if(xmlHttp.readyState === 4 && xmlHttp.status == 200){
+                    SetData(xmlHttp.responseText);
+                }
+            }
+            xmlHttp.open("GET", "/sysdata", true);
+            xmlHttp.send(null);
+        }, 2000);
+
+        function SetData(sysdata){
+	   data = JSON.parse(sysdata)
+	   Object.keys(data).map((key) => {data[key] = data[key].split("=")[1]});
+	   document.getElementById("cputemp").innerHTML = "Temperatura procesor : " + data["cpu_temp"]
+           document.getElementById("frecvarm").innerHTML = "Frecventa procesor : " + parseInt(data["frecv_arm"]) / 1000000 + " MHz"
+           document.getElementById("frecvcore").innerHTML = "Frecventa core procesor : " + parseInt(data["frecv_core"]) / 1000000 + "MHz"
+           document.getElementById("ramcpu").innerHTML = "Memorie RAM alocata pentru CPU : " + data["ram_cpu"] + "b"
+           document.getElementById("ramgpu").innerHTML = "Memorie RAM alocata pentru GPU :  " + data["ram_gpu"] + "b"
+ 	   document.getElementById("tensalimcore").innerHTML = "Tensiune alimentare core : " + data["tens_alim_core"]
+           document.getElementById("tensio").innerHTML = "Tensiune alimentare I/O : " + data["tens_io"]
+           document.getElementById("tensram").innerHTML = "Tensiune alimentare RAM : " + data["tens_ram"]
+	   document.getElementById("frecvsd").innerHTML = "Frecventa memorie SD : " + parseInt(data["sd_card_clock"]) / 1000000 + "MHz"
+ 	   document.getElementById("throttle").innerHTML = "Throttle : " + data["throttle"]
+        }
+    </script>
+{% endblock %}
+

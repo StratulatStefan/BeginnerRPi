@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h3 class="title">Host Website</h3>
+
+    <h3>Una dintre cele mai frecvente intrebari care apare in randul dezvoltatorilor de pagini web, este
+        referitoare la hosting. Unde anume sa gazduiesti un server web?  Cei mai multi apeleaza la servicii
+        platite de hosting. Pentru cei mai multi, aceasta este cea mai buna solutie, intrucat companiile de
+        hosting ofera multe garantii, cum ar fi numar nelimitat de accesari fara erori, ceea ce ar fi mai greu
+        de realizat printr-un hosting creat individual.</h3>
+
+    <h3 style="margin-bottom:50px;">Cand vine vorba de platforme de hosting construite individual, multi dezvoltatori dau un pas inapoi, fiind
+        constienti de costurile ridicate ale acestora. Cu toate acestea, in cazul in care dorim sa dezvoltam
+        o pagina web care nu are foarte multe accesari, dar care sa ruleze constant fara erori, putem sa ne
+        gandim la platforme precum <strong>Raspberry Pi</strong>, mai ales ca ultimele generatii sunt foarte
+        puternice, avand multa putere de calcul si memorie.</h3>
+
+    <h3> Pentru a demonstra acest lucru, am realizat 2 servere : </h3>
+    <ol>
+        <li>Un server realizat cu framework-ul Flask pentru Python, server care gazduieste aceasta pagina</li>
+        <li>Un server realizat cu NodeJS, care va gazdui un site mai complex, ce necesita multe resurse</li>
+    </ol>
+    <a id="websiteredirect" href="/peakyblinders">Click aici pentru a accesa site-ul</a>
+    <h3>Site-ul este realizat pe platformat NodeJS si necesita foarte multe resurse</h3>
+    <ul style="list-style-type: disc">
+        <li>Comunicare cu server de baze de date de tip SQL, instalat pe RPi</li>
+        <li>Manipulare de fisiere de tip JSON</li>
+        <li>Foarte multe cereri de tip HTTP pentru resurse web (toate imaginile sunt preluate de pe internet)</li>
+        <li>Manipulare de cookie-uri pentru datele utilizatorilor</li>
+        <li>Conectare la server STMP.Gmail pentru transmiterea de email-uri</li>
+        <li>Numar mare de fisiere HTML, CSS si Javascript</li>
+    </ul>
+    <h3>Cu toate acestea, RPi gazduieste foarte bine acest server de NodeJS, oferind acces garantat in orice
+        moment al zilei, unui numar mare de utilizatori.</h3>
+{% endblock %}
