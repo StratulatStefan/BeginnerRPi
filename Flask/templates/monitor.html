@@ -28,43 +28,21 @@
         setInterval(getLocalData, 5000);
         setInterval(getGlobalData, 10000);
 
-<<<<<<< HEAD
         async function getGlobalData(){
-	    var response = await fetch("http://ipinfo.io?token=25192c624933e1")
-	    var position = await response.json()
+	        var response = await fetch("http://ipinfo.io?token=25192c624933e1")
+	        var position = await response.json()
             let city = position.city;	
-	    let apikey = "529ce5e970fc138f7303bf09eb34a9cf"
+	        let apikey = "529ce5e970fc138f7303bf09eb34a9cf"
             let link = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apikey}`
             response = await fetch(link)
             let body = await response.json()
             document.getElementById("locatie").innerHTML = `Locatia dumneavoastra : ${city}`
             document.getElementById("temperaturaexterioara").innerHTML =
-                    `Temperatura : ${parseFloat(parseFloat(body.main.feels_like) - 273.15).toFixed(2)} C<br/>
+                   `Temperatura : ${parseFloat(parseFloat(body.main.feels_like) - 273.15).toFixed(2)} C<br/>
                     Temperatura maxima : ${parseFloat(parseFloat(body.main.temp_max) - 273.15).toFixed(2)} C<br/>
                     Temperatura minima : ${parseFloat(parseFloat(body.main.temp_min) - 273.15).toFixed(2)} C<br/>
                     Umiditate exterioara : ${body.main.humidity}%<br/>`
                 
-            
-=======
-        function getGlobalData(){
-            navigator.geolocation.getCurrentPosition(
-                async function(position){
-                    let latitude = parseFloat(position.coords.latitude).toFixed(5)
-                    let longitude = parseFloat(position.coords.longitude).toFixed(5)
-                    let apikey = "529ce5e970fc138f7303bf09eb34a9cf"
-                    let link = `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apikey}`
-                    let response = await fetch(link)
-                    let body = await response.json()
-                    document.getElementById("locatie").innerHTML = `Locatia dumneavoastra : ${body.name}`
-                    document.getElementById("temperaturaexterioara").innerHTML =
-                           `Temperatura : ${parseFloat(parseFloat(body.main.feels_like) - 273.15).toFixed(2)} C<br/>
-                           Temperatura maxima : ${parseFloat(parseFloat(body.main.temp_max) - 273.15).toFixed(2)} C<br/>
-                           Temperatura minima : ${parseFloat(parseFloat(body.main.temp_min) - 273.15).toFixed(2)} C<br/>
-                           Umiditate exterioara : ${body.main.humidity}%<br/>`
-                }
-            );
->>>>>>> 30609e3408c4277b8b70fa24deaba6c110fe43ed
-        }
         function getLocalData(){
             fetch('/datesenzortempsigaz').then(result => result.json()).then(result => {
                 document.getElementById("temperaturainterioara").innerHTML = `Temperatura interioara : ${result.temp}`
