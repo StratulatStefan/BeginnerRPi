@@ -17,14 +17,20 @@ def GetSystemData():
 		"sd_card_clock" : "measure_clock emmc"
 	}
 	data = {}
+	'''
 	for key in field:
 		process = subprocess.Popen([filepath, field[key]], stdout=subprocess.PIPE)
 		output = process.stdout.readline().decode('ascii')
 		data[key] = output[:-1]
+	'''
 	return data
 
 
 def GetTempHumidityGas():
 	temperatura, umiditate = TemperatureAndHumidity()
 	gas = Gas()
+<<<<<<< HEAD
 	return {"temp" : temperatura ,"umiditate" : umiditate, "gaz" : gas}
+=======
+	return {"temp" : temperatura ,"umiditate" : umiditate, "gaz" : gas}
+>>>>>>> 30609e3408c4277b8b70fa24deaba6c110fe43ed
