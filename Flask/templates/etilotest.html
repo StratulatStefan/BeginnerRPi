@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h3 class="title">Etilotest</h3>
+    <h3>In acelasi stil prezentat anterior, vom construi un etilotest. </h3>
+    <h3>Etilotestul este un dispozitiv care masoara nivelul de alcool din aerul respirat.</h3>
+    <h3>Instructiuni : Persoana trebuie sa fie la o distanta mica de senzor. In acest sens,
+        un senzor va masura distanta persoanei fata de dispozitiv si va oferi un feedback.
+        Dupa ce primeste confirmare din partea sistemului, tinand apasat incontinuu butonul de masurare,
+        persoana sufla in senzor cat timp va fi indicat de sistem prin intermediul unui cronometru.
+        Rezultatul va fi afisat ulterior pe ecran</h3>
+    <h3>Elementele folosite pentru acest sistem sunt urmatoarele : </h3>
+    <hr />
+    <ol>
+        <li>Senzor ultrasonic pentru masurarea distantei (HC-SR04) : Va masura distanta persoanei fata de dispozitiv</li>
+        <li>Senzor de masurare a nivelului de alcool din aerul respirat (MQ3)</li>
+        <li>Buton</li>
+    </ol>
+    <hr />
+
+    <button>Pornire secventa masurare</button>
+    <div id="alcool">
+        <!-- Am ramas aici -->
+    </div>
+{% endblock %}
+

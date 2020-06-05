@@ -57,3 +57,24 @@ ul{
     margin-bottom : 100px;
     color : green;
 }
+
+fieldset{
+    width : 800px;
+    margin-left:auto;
+    margin-right:auto;
+    border : 3px solid white;
+    border-radius:10px;
+    margin-top : 50px;
+}
+
+button{
+    width:500px;
+    font-size:30px;
+    margin-top:50px;
+    margin-bottom:50px;
+    font-family : fantasy;
+}
+
+#alcool{
+
+}
