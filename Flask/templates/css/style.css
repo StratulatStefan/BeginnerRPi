@@ -76,5 +76,7 @@ button{
 }
 
 #alcool{
-
+    border : 5px solid white;
+    border-white : 10px;
+    display : none;
 }

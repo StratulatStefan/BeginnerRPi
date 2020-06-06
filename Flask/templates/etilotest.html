@@ -13,13 +13,61 @@
     <ol>
         <li>Senzor ultrasonic pentru masurarea distantei (HC-SR04) : Va masura distanta persoanei fata de dispozitiv</li>
         <li>Senzor de masurare a nivelului de alcool din aerul respirat (MQ3)</li>
-        <li>Buton</li>
     </ol>
     <hr />
 
-    <button>Pornire secventa masurare</button>
+    <button onclick="EtilotestSequence()">Pornire secventa masurare</button>
     <div id="alcool">
-        <!-- Am ramas aici -->
+        <h3>Pasi de urmat</h3>
+        <ol>
+	    <li>Pentru a porni secventa de masurare, trebuie sa ne asiguram ca sunteti langa senzor.<br/>
+            </li>
+            <h3>Luati cartela de pe masa si mentineti-o aproape de senzor timp de 7 perioade de masurare!</h3>
+	    <h3 id="distanta"></h3>
+            <h3 id="distanta_cartela" style="color:red;">Astept apropierea cartelei...</h3>
+            <h3 id="cronometru"></h3>
+        </ol>
     </div>
+    <script>
+         var cronometru = 7;
+         
+         function EtilotestSequence(){
+    	     var alcool = document.getElementById("alcool");
+             alcool.style.display = "block";
+             distanceCheck = setInterval(getDistance, 1000); 
+	     }
+
+         async function getDistance(){
+             var response = await fetch('/distantacartela')
+             var distance = await response.json()
+             console.log(distance);
+             distance = parseFloat(distance.distanta).toFixed(2)
+             
+             if(distance > 20){
+var cartela = document.getElementById("distanta_cartela")
+                    cartela.style.color = "red";
+                    cartela.innerHTML = "Astept apropierea cartelei..."
+	         document.getElementById("distanta").innerHTML = "Distanta : prea mare [peste 20 cm]"
+             cronometru = 7
+             document.getElementById("cronometru").innerHTML = `Cronometru : ${cronometru} perioade`
+	     }
+	     else{
+
+                    var cartela = document.getElementById("distanta_cartela")
+                    cartela.style.color = "green";
+                 document.getElementById("distanta").innerHTML = `Distanta : ${distance} cm`
+                 cronometru -= 1;
+             document.getElementById("cronometru").innerHTML = `Cronometru : ${cronometru} perioade`
+cartela.innerHTML = "Am detectat cartela. Continuati sa o mentineti!"
+                 if(cronometru == 0){
+                    cartela.innerHTML = "Cartela detectata!"
+            document.getElementById("cronometru").style.display = "none"
+document.getElementById("distanta").style.display = "none"
+                    clearInterval(distanceCheck);
+                }
+                 
+             } 
+	}
+    </script>
 {% endblock %}
 

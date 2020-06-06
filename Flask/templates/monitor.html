@@ -12,20 +12,23 @@
     </ul>
     <hr />
     <fieldset>
-        <h3>Actualizarea se face la fiecare 10 secunde.</h3>
+        <h3>[Actualizarea se face la fiecare 10 secunde]</h3>
         <h3 id="locatie"></h3>
         <h3 id="temperaturaexterioara"></h3>
     </fieldset>
     <fieldset>
-        <h3>Actualizarea se face la fiecare 5 secunde.</h3>
+        <h3>[Actualizarea se face la fiecare 5 secunde]</h3>
         <h3 id="temperaturainterioara"></h3>
         <h3 id="umiditateinterioara"></h3>
+	<h3>[Actualizarea se face la fiecare 1 secunda]</h3>
         <h3 id="nivelgazinterior"></h3>
     </fieldset>
     <script>
         getGlobalData();
-        getLocalData();
-        setInterval(getLocalData, 5000);
+        getLocalTempHum();
+        getLocalGas();
+        setInterval(getLocalGas, 1000);
+        setInterval(getLocalTempHum, 5000);
         setInterval(getGlobalData, 10000);
 
         async function getGlobalData(){
@@ -42,14 +45,18 @@
                     Temperatura maxima : ${parseFloat(parseFloat(body.main.temp_max) - 273.15).toFixed(2)} C<br/>
                     Temperatura minima : ${parseFloat(parseFloat(body.main.temp_min) - 273.15).toFixed(2)} C<br/>
                     Umiditate exterioara : ${body.main.humidity}%<br/>`
-                
-        function getLocalData(){
-            fetch('/datesenzortempsigaz').then(result => result.json()).then(result => {
+        }        
+        function getLocalTempHum(){
+            fetch('/datesenzortemp').then(result => result.json()).then(result => {
                 document.getElementById("temperaturainterioara").innerHTML = `Temperatura interioara : ${result.temp}`
                 document.getElementById("umiditateinterioara").innerHTML = `Umiditate interioara : ${result.umiditate}`
-                document.getElementById("nivelgazinterior").innerHTML = `Nivel gaz : ${result.gaz}`
             });
         }
+	function getLocalGas(){
+	   fetch('/datesenzorgaz').then(result => result.json()).then(result => {
+	   	document.getElementById("nivelgazinterior").innerHTML = `Detectie gaz : ${result.gaz}`
+	   });
+	}
     </script>
 {% endblock %}
 

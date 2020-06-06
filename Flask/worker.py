@@ -1,6 +1,7 @@
 import subprocess
 from DHT11 import *
 from MQ2 import *
+from HCSR04 import *
 
 def GetSystemData():
 	filepath = "/usr/bin/vcgencmd"
@@ -17,20 +18,20 @@ def GetSystemData():
 		"sd_card_clock" : "measure_clock emmc"
 	}
 	data = {}
-	'''
 	for key in field:
 		process = subprocess.Popen([filepath, field[key]], stdout=subprocess.PIPE)
 		output = process.stdout.readline().decode('ascii')
 		data[key] = output[:-1]
-	'''
 	return data
 
+def GetDistance():
+    distance = UltrasonicDistance()
+    return {"distanta" : distance}
 
-def GetTempHumidityGas():
+def GetTempHumidity():
 	temperatura, umiditate = TemperatureAndHumidity()
-	gas = Gas()
-<<<<<<< HEAD
-	return {"temp" : temperatura ,"umiditate" : umiditate, "gaz" : gas}
-=======
-	return {"temp" : temperatura ,"umiditate" : umiditate, "gaz" : gas}
->>>>>>> 30609e3408c4277b8b70fa24deaba6c110fe43ed
+	return {"temp" : temperatura ,"umiditate" : umiditate}
+
+def GetGas():
+        gas = Gas()
+        return {"gaz" : gas}

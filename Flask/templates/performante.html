@@ -21,8 +21,11 @@
     <h3 id="tensram"></h3>
     <h3 id="throttle"></h3>
     <script>
-        setInterval(() => {
-            var xmlHttp = new XMLHttpRequest();
+	GetSystemData();
+        setInterval(GetSystemData, 2000);
+
+	function GetSystemData(){
+	    var xmlHttp = new XMLHttpRequest();
             xmlHttp.onreadystatechange = () => {
                 if(xmlHttp.readyState === 4 && xmlHttp.status == 200){
                     SetData(xmlHttp.responseText);
@@ -30,7 +33,7 @@
             }
             xmlHttp.open("GET", "/sysdata", true);
             xmlHttp.send(null);
-        }, 2000);
+	}
 
         function SetData(sysdata){
 			data = JSON.parse(sysdata)

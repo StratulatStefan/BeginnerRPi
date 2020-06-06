@@ -12,7 +12,13 @@ def home(name):
         print("post")
         user = request.form["nm" name din form]
         return redirect(url_for("user", usr=user))
+
 '''
+
+@app.route('/distantacartela')
+def distance():
+    data = GetDistance()
+    return str(json.dumps(data))
 
 @app.route('/style.css')
 def styles():
@@ -43,11 +49,15 @@ def monitor():
 def etilotest():
     return render_template("etilotest.html")
 
-@app.route('/datesenzortempsigaz')
-def DHT11MQ2():
-    data = GetTempHumidityGas()
+@app.route('/datesenzortemp')
+def DHT11():
+    data = GetTempHumidity()
     return str(json.dumps(data))
 
+@app.route('/datesenzorgaz')
+def MQ2():
+    data = GetGas()
+    return str(json.dumps(data))
 
 @app.route('/home')
 @app.route('/')
