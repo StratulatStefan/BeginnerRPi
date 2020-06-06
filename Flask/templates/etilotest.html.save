@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h3 class="title">Etilotest</h3>
+    <h3>In acelasi stil prezentat anterior, vom construi un etilotest. </h3>
+    <h3>Etilotestul este un dispozitiv care masoara nivelul de alcool din aerul respirat.</h3>
+    <h3>Instructiuni : Persoana trebuie sa fie la o distanta mica de senzor. In acest sens,
+        un senzor va masura distanta persoanei fata de dispozitiv si va oferi un feedback.
+        Dupa ce primeste confirmare din partea sistemului, tinand apasat incontinuu butonul de masurare,
+        persoana sufla in senzor cat timp va fi indicat de sistem prin intermediul unui cronometru.
+        Rezultatul va fi afisat ulterior pe ecran</h3>
+    <h3>Elementele folosite pentru acest sistem sunt urmatoarele : </h3>
+    <hr />
+    <ol>
+        <li>Senzor ultrasonic pentru masurarea distantei (HC-SR04) : Va masura distanta persoanei fata de dispozitiv</li>
+        <li>Senzor de masurare a nivelului de alcool din aerul respirat (MQ3)</li>
+    </ol>
+    <hr />
+
+    <button onclick="EtilotestSequence()">Pornire secventa masurare</button>
+    <div id="alcool">
+        <h3>Pasi de urmat</h3>
+        <h3>1. &nbsp;&nbsp;Pentru a porni secventa de masurare, trebuie sa ne asiguram ca sunteti langa senzor.<br/></h3>         
+        <h3>Luati cartela de pe masa si mentineti-o aproape de senzor timp de 7 perioade de masurare!</h3>
+	    <h3 id="distanta"></h3>
+        <h3 id="distanta_cartela" style="color:red;">Astept apropierea cartelei...</h3>
+        <h3 id="cronometru"></h3>             
+        <h3 id="secv2" style="display:none;">2. &nbsp;&nbsp;In 5 secunde incepe masurarea. La semnalul indicat, incepeti sa suflati</h3>
+        <h3 id="cronometru2"></h3>
+        <h3 id="masuratoare" style="color:red; font-size:50px;"></h3>
+        <h3 id="detectie"></h3>
+    </div>
+    <script>
+        var cronometru = 7;
+        var cron = document.getElementById("cronometru")
+        var cron2 = document.getElementById("cronometru2")
+        var cartela = document.getElementById("distanta_cartela")
+        var distanta = document.getElementById("distanta")
+        var masuratoare = document.getElementById("masuratoare")
+        var detectie = document.getElementById("detectie")
+	var raspuns_test = "Negativ! Puteti conduce in siguranta!"
+        function EtilotestSequence(){
+    	    var alcool = document.getElementById("alcool");
+            alcool.style.display = "block";
+            distanceCheck = setInterval(getDistance, 1000); 
+	    }
+
+        async function getDistance(){
+            var response = await fetch('/distantacartela')
+            var distance = await response.json()
+            distance = parseFloat(distance.distanta).toFixed(2)
+             
+            if(distance > 7){
+                cartela.style.color = "red";
+                cartela.innerHTML = "Astept apropierea cartelei..."
+                cronometru = 7
+                cron.innerHTML = `Cronometru : ${cronometru} perioade`
+                if(distance > 20){
+    	            distanta.innerHTML = "Nu putem detecta cartela..."
+                }
+                else{
+    	            distanta.innerHTML = `Distanta : ${distance} cm`
+                }
+	        }
+	        else{
+                distanta.innerHTML = `Distanta : ${distance} cm`
+                cronometru -= 1;
+                cron.innerHTML = `Cronometru : ${cronometru} perioade`
+                cartela.style.color = "green";
+                cartela.innerHTML = "Am detectat cartela. Continuati sa o mentineti!"
+                if(cronometru == 0){
+                    cartela.innerHTML = "Cartela detectata!"
+                    cron.style.display = "none"
+                    distanta.style.display = "none"
+                    clearInterval(distanceCheck);
+                    document.getElementById("secv2").style.display = "block"
+                    setTimeout(CronometruStart, 1000);
+                }
+            } 
+	    }
+        function CronometruStart(){
+            cronometru = 5;
+            var count = () => {
+                cron2.innerHTML = `Masuratoarea incepe in ${cronometru} secunde`
+                cronometru -= 1
+                if(cronometru == 0){
+                    clearInterval(check)
+                    cron2.style.display = "none"      
+                    Masuratoare()
+                }
+            }
+            check = setInterval(count, 1000)
+        }
+    
+        function Masuratoare(){
+            masuratoare.innerHTML = "Suflați!"
+            cronometru = 10
+            check = setInterval(async () => {
+                var response = await fetch("/detectiealcool")
+                var alcool = await response.json()                
+                detectie.innerHTML = `Alcool detectat : ${alcool.alcool}`
+                if(alcool.alcool == "Alcohol detected!"){
+			raspuns_test = "Pozitiv! Va recomandam sa nu va urcati la volan!"
+		}GPIO.setmode(GPIO.BOARD)
+    GPIO.setup(pin, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
+    message = ""
+    if GPIO.input(pin) == 0:
+        message =  "Gas detected!"
+    else:
+        message =  "No gas detected!"
+    GPIO.cleanup()
+    return message
+                cronometru -= 1
+                if(cronometru == 0){
+                    masuratoare.innerHTML = "Va puteti opri"
+                    masuratoare.style.color = "green"
+                    detectie.innerHTML = `Se calculeaza raportul final...`
+                    clearInterval(check)
+                    setTimeout(() => {
+                        detectie.innerHTML = `Raspuns final : ${raspuns_test}`
+                    }, 3000);
+                }
+            },500);
+        }
+    </script>
+{% endblock %}
+
