@@ -20,6 +20,11 @@ def distance():
     data = GetDistance()
     return str(json.dumps(data))
 
+@app.route('/detectiealcool')
+def alcool():
+    alcool = GetAlcool()
+    return str(json.dumps(alcool))
+
 @app.route('/style.css')
 def styles():
     return render_template('css/style.css')

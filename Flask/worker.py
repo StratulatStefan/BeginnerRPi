@@ -2,6 +2,11 @@ import subprocess
 from DHT11 import *
 from MQ2 import *
 from HCSR04 import *
+from MQ3 import *
+
+def GetAlcool():
+    alcool = Alcool()
+    return {"alcool" : alcool}
 
 def GetSystemData():
 	filepath = "/usr/bin/vcgencmd"
