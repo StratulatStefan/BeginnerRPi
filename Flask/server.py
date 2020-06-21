@@ -14,11 +14,21 @@ def home(name):
         return redirect(url_for("user", usr=user))
 
 '''
+@app.route('/etilotestinit')
+def etilotestsequenceinit():
+    InitializeSequence()
+    return "done"
 
 @app.route('/distantacartela')
 def distance():
     data = GetDistance()
     return str(json.dumps(data))
+
+@app.route('/cronometter/<time>', methods = ["POST"])
+def cronometter(time):
+    if request.method == "POST":
+        SetTime(time)
+    return "time"
 
 @app.route('/detectiealcool')
 def alcool():
@@ -40,7 +50,7 @@ def websitehost():
 
 @app.route('/peakyblinders')
 def peakyblindersredirect():
-    return redirect("http://192.168.43.43:7000", code=302)
+    return redirect("http://192.168.100.231:7000", code=302)
 
 @app.route('/performante')
 def performanteTimpReal():

@@ -3,10 +3,17 @@ from DHT11 import *
 from MQ2 import *
 from HCSR04 import *
 from MQ3 import *
+from SG90 import *
 
 def GetAlcool():
     alcool = Alcool()
     return {"alcool" : alcool}
+
+def SetTime(time):
+    Cronometter(time)
+
+def InitializeSequence():
+    EtilotestInit()
 
 def GetSystemData():
 	filepath = "/usr/bin/vcgencmd"

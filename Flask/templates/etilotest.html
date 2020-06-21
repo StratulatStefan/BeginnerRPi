@@ -30,7 +30,8 @@
         <h3 id="detectie"></h3>
     </div>
     <script>
-        var cronometru = 7;
+        var initialcronometru = 10
+        var cronometru = initialcronometru;
         var cron = document.getElementById("cronometru")
         var cron2 = document.getElementById("cronometru2")
         var cartela = document.getElementById("distanta_cartela")
@@ -38,10 +39,13 @@
         var masuratoare = document.getElementById("masuratoare")
         var detectie = document.getElementById("detectie")
 	var raspuns_test = "Negativ! Puteti conduce in siguranta!"
-        function EtilotestSequence(){
-    	    var alcool = document.getElementById("alcool");
+        async function EtilotestSequence(){
+            var initialization = await fetch('/etilotestinit')
+            initialization =  await fetch('/cronometter/10')
+      	    var alcool = document.getElementById("alcool");
             alcool.style.display = "block";
-            distanceCheck = setInterval(getDistance, 1000); 
+            distanceCheck = setInterval(getDistance, 1000);
+ 
 	    }
 
         async function getDistance(){
@@ -52,8 +56,9 @@
             if(distance > 7){
                 cartela.style.color = "red";
                 cartela.innerHTML = "Astept apropierea cartelei..."
-                cronometru = 7
+                cronometru = initialcronometru
                 cron.innerHTML = `Cronometru : ${cronometru} perioade`
+                fetch('/cronometter/10').then(res => {})
                 if(distance > 20){
     	            distanta.innerHTML = "Nu putem detecta cartela..."
                 }
@@ -62,7 +67,9 @@
                 }
 	        }
 	        else{
-                distanta.innerHTML = `Distanta : ${distance} cm`
+                distanta.innerHTML = `Distanta : ${distance} cm`                   
+     		    var vll = initialcronometru - cronometru
+		        fetch('/cronometter/' + vll, {method:"POST",body : JSON.stringify(vll)}).then(res => {})
                 cronometru -= 1;
                 cron.innerHTML = `Cronometru : ${cronometru} perioade`
                 cartela.style.color = "green";
@@ -77,8 +84,8 @@
                 }
             } 
 	    }
-        function CronometruStart(){
-            cronometru = 5;
+         function CronometruStart(){
+            cronometru = 10;
             var count = () => {
                 cron2.innerHTML = `Masuratoarea incepe in ${cronometru} secunde`
                 cronometru -= 1
@@ -88,7 +95,7 @@
                     Masuratoare()
                 }
             }
-            check = setInterval(count, 1000)
+            check = setInterval(count, 100)
         }
     
         function Masuratoare(){

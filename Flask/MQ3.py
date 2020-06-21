@@ -1,10 +1,10 @@
 import RPi.GPIO as GPIO
 
-# ground pe 9
-# VCC (3.3V pe 1)
+# ground pe 2
+# VCC (5V pe 34)
 
 def Alcool():
-    pin = 7
+    pin = 36
     GPIO.setmode(GPIO.BOARD)
     GPIO.setup(pin, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
     message = ""
