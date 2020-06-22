@@ -8,7 +8,6 @@
         <li>Temperatura exterioara (informatie preluata de pe internet)</li>
         <li>Temperatura ambientului (informatie preluata de la senzorul DHT11)</li>
         <li>Umiditatea ambientului (informatie preluata de la senzorul DHT11)</li>
-        <!-- <li>Nivelul de Gaz (informatie preluata de la senzorul MQ2)</li> -->
     </ul>
     <hr />
     <fieldset>
@@ -20,14 +19,11 @@
         <h3>[Actualizarea se face la fiecare 5 secunde]</h3>
         <h3 id="temperaturainterioara"></h3>
         <h3 id="umiditateinterioara"></h3>
-	<!-- <h3>[Actualizarea se face la fiecare 1 secunda]</h3>
-        <h3 id="nivelgazinterior"></h3> -->
     </fieldset>
     <script>
         getGlobalData();
         getLocalTempHum();
         //getLocalGas();
-        //setInterval(getLocalGas, 1000);
         setInterval(getLocalTempHum, 5000);
         setInterval(getGlobalData, 10000);
 
@@ -52,11 +48,6 @@
                 document.getElementById("umiditateinterioara").innerHTML = `Umiditate interioara : ${result.umiditate}`
             });
         }
-	/*function getLocalGas(){
-	   fetch('/datesenzorgaz').then(result => result.json()).then(result => {
-	   	document.getElementById("nivelgazinterior").innerHTML = `Detectie gaz : ${result.gaz}`
-	   });
-	}*/
     </script>
 {% endblock %}
 
