@@ -5,15 +5,7 @@ from worker import *
 app = Flask(__name__)
 app.register_error_handler(404, lambda error: render_template("notfound.html"))
 
-'''
-@app.route('/<name>', methods = ["POST", "GET"])
-def home(name):
-    if request.method == "POST":
-        print("post")
-        user = request.form["nm" name din form]
-        return redirect(url_for("user", usr=user))
 
-'''
 @app.route('/etilotestinit')
 def etilotestsequenceinit():
     InitializeSequence()
@@ -24,10 +16,9 @@ def distance():
     data = GetDistance()
     return str(json.dumps(data))
 
-@app.route('/cronometter/<time>', methods = ["POST"])
+@app.route('/cronometter/<time>')
 def cronometter(time):
-    if request.method == "POST":
-        SetTime(time)
+    SetTime(time)
     return "time"
 
 @app.route('/detectiealcool')
@@ -78,7 +69,6 @@ def MQ2():
 @app.route('/')
 def home():
     return render_template("index.html")
-
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)

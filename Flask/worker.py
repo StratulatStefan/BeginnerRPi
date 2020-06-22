@@ -1,9 +1,6 @@
 import subprocess
-from DHT11 import *
-from MQ2 import *
-from HCSR04 import *
-from MQ3 import *
-from SG90 import *
+from TemperatureAndHumidity import *
+from EtilotestSequence import *
 
 def GetAlcool():
     alcool = Alcool()
@@ -43,7 +40,3 @@ def GetDistance():
 def GetTempHumidity():
 	temperatura, umiditate = TemperatureAndHumidity()
 	return {"temp" : temperatura ,"umiditate" : umiditate}
-
-def GetGas():
-        gas = Gas()
-        return {"gaz" : gas}
