@@ -60,11 +60,6 @@ def DHT11():
     data = GetTempHumidity()
     return str(json.dumps(data))
 
-@app.route('/datesenzorgaz')
-def MQ2():
-    data = GetGas()
-    return str(json.dumps(data))
-
 @app.route('/home')
 @app.route('/')
 def home():
